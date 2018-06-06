@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.apusapps.livewallpaper"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+
+    releaseImplementation(name:'livewallpaperglservice-release', ext: 'aar')
+    debugImplementation(name:'livewallpaperglservice-debug', ext: 'aar')
+    releaseImplementation 'com.livewallpaper:preview:1.0.2-release'
+    debugImplementation 'com.livewallpaper:preview:1.0.2-debug'
+}
+
+apply plugin: 'xal.gradle.plugin'
+
+xal {
+    // 1.0.23版本开始，所有android app的项目必须添加下面这一行
+    persistProcessName android.defaultConfig.applicationId
+    // 例如    persistProcessName ':core'
+    // 例如    persistProcessName 'com.package.your.app'
+}
